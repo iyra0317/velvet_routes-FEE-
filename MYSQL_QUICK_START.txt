@@ -1,0 +1,61 @@
+================================================================================
+                    VELVETROUTES - MYSQL QUICK START
+================================================================================
+
+STEP 1: CREATE DATABASE
+------------------------
+Open MySQL Command Line or MySQL Workbench and run:
+
+    CREATE DATABASE velvetroutes;
+
+
+STEP 2: UPDATE .ENV FILE
+-------------------------
+Open the .env file and add this line (update YOUR_PASSWORD):
+
+    DATABASE_URL="mysql://root:YOUR_PASSWORD@localhost:3306/velvetroutes"
+
+Example:
+    DATABASE_URL="mysql://root:admin123@localhost:3306/velvetroutes"
+
+
+STEP 3: RUN SETUP
+------------------
+Double-click: setup-database.bat
+
+Or run in terminal:
+    setup-database.bat
+
+
+STEP 4: START SERVER
+---------------------
+Run in terminal:
+    npm run dev
+
+
+STEP 5: TEST
+------------
+Open browser: http://localhost:5000/api/health
+
+Or run: test-api.bat
+
+
+================================================================================
+                              YOU'RE DONE! 🎉
+================================================================================
+
+USEFUL COMMANDS:
+- npm run dev              Start server
+- npm run db:studio        View database (opens GUI)
+- test-api.bat             Test API endpoints
+
+TEST CREDENTIALS:
+- Admin: admin@velvetroutes.com / admin123
+- User:  john.doe@example.com / password123
+
+NEED HELP?
+- Read: START_HERE_MYSQL.md
+- Read: MYSQL_SETUP.md
+- Read: API_DOCUMENTATION.md
+
+================================================================================

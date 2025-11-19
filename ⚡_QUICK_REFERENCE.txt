@@ -1,0 +1,125 @@
+================================================================================
+                    ⚡ VELVETROUTES - QUICK REFERENCE
+================================================================================
+
+🚀 SETUP (First Time Only)
+================================================================================
+1. CREATE DATABASE:
+   mysql -u root -p
+   CREATE DATABASE velvetroutes;
+   EXIT;
+
+2. UPDATE .ENV:
+   DATABASE_URL="mysql://root:YOUR_PASSWORD@localhost:3306/velvetroutes"
+
+3. RUN SETUP:
+   setup-database.bat
+
+4. START APP:
+   start.bat
+
+================================================================================
+📝 DAILY COMMANDS
+================================================================================
+start.bat                    - Start frontend & backend
+npm run dev                  - Start backend only
+npm run db:studio            - View database (GUI)
+test-api.bat                 - Test API endpoints
+
+================================================================================
+🔧 DATABASE COMMANDS
+================================================================================
+npm run db:generate          - Generate Prisma Client
+npm run db:migrate           - Create/update tables
+npm run db:seed              - Load sample data
+npm run db:studio            - Open database GUI
+npm run db:reset             - Reset database (⚠️ deletes all data)
+
+================================================================================
+🌐 URLS
+================================================================================
+Frontend:        http://localhost:3000
+Backend API:     http://localhost:5000/api
+Health Check:    http://localhost:5000/api/health
+Database GUI:    http://localhost:5555 (after npm run db:studio)
+
+================================================================================
+🔑 TEST CREDENTIALS
+================================================================================
+Admin:
+  Email:    admin@velvetroutes.com
+  Password: admin123
+
+User:
+  Email:    john.doe@example.com
+  Password: password123
+
+================================================================================
+📚 DOCUMENTATION
+================================================================================
+Setup:           START_HERE_MYSQL.md
+Troubleshoot:    MYSQL_SETUP.md
+API Reference:   API_DOCUMENTATION.md
+File Guide:      FILE_GUIDE.md
+Full Summary:    FINAL_SUMMARY.md
+
+================================================================================
+🆘 TROUBLESHOOTING
+================================================================================
+Can't connect?       → Check MySQL is running
+Access denied?       → Check password in .env
+Database missing?    → Run: CREATE DATABASE velvetroutes;
+Port in use?         → Change PORT in .env
+Prisma error?        → Run: npm run db:generate
+
+================================================================================
+📊 PROJECT STRUCTURE
+================================================================================
+client/              - React frontend
+server/              - Node.js backend
+  ├── index.ts       - Main server
+  ├── routes/        - API endpoints
+  └── services/      - Business logic
+prisma/              - Database
+  ├── schema.prisma  - 17 tables
+  └── seed.ts        - Sample data
+
+================================================================================
+🎯 QUICK START CHECKLIST
+================================================================================
+☐ MySQL installed and running
+☐ Node.js installed
+☐ Database created (velvetroutes)
+☐ .env file updated with password
+☐ Ran setup-database.bat
+☐ Started with start.bat
+☐ Tested at http://localhost:3000
+
+================================================================================
+💡 PRO TIPS
+================================================================================
+• Use npm run db:studio to see your data visually
+• Run test-api.bat to verify API is working
+• Check .env file if connection fails
+• Read START_HERE_MYSQL.md for detailed setup
+• Keep .env file secret (never commit to Git)
+
+================================================================================
+🔗 USEFUL LINKS
+================================================================================
+Prisma Docs:     https://www.prisma.io/docs
+MySQL Docs:      https://dev.mysql.com/doc/
+Express Docs:    https://expressjs.com/
+React Docs:      https://react.dev/
+
+================================================================================
+📞 NEED MORE HELP?
+================================================================================
+Read: START_HERE_MYSQL.md (simple setup)
+Read: MYSQL_SETUP.md (detailed guide)
+Read: FILE_GUIDE.md (what each file does)
+Read: FINAL_SUMMARY.md (complete overview)
+
+================================================================================
+                        ✨ YOU'RE READY TO GO!
+================================================================================

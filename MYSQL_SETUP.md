@@ -1,474 +1,269 @@
-# 🐬 MySQL Setup Guide for VelvetRoutes
-
-## ✅ What Changed
-
-The database has been converted from PostgreSQL to MySQL!
-
-### Key Changes:
-- ✅ Schema updated for MySQL compatibility
-- ✅ UUID types changed to VARCHAR(36)
-- ✅ Timestamp types changed to DateTime
-- ✅ JSON fields simplified (no @db.JsonB)
-- ✅ All PostgreSQL-specific types removed
-
----
+# MySQL Setup Guide for VelvetRoutes
 
 ## 📋 Prerequisites
 
-### Install MySQL
+- MySQL installed and running (MySQL 8.0+ recommended)
+- Node.js installed (v18+)
 
-**Windows:**
-1. Download MySQL Installer from: https://dev.mysql.com/downloads/installer/
-2. Run the installer
-3. Choose "Developer Default" setup
-4. Set root password during installation
-5. Complete the installation
+## 🚀 Quick Setup
 
-**Verify Installation:**
+### Step 1: Create MySQL Database
+
+**Option A: Using MySQL Command Line**
 ```bash
-mysql --version
-```
-
----
-
-## 🚀 Quick Setup (4 Steps)
-
-### Step 1: Install Dependencies
-
-```bash
-install-all.bat
-```
-
-### Step 2: Create MySQL Database
-
-Open MySQL Command Line or MySQL Workbench:
-
-```sql
--- Login to MySQL
+# Open MySQL command line
 mysql -u root -p
 
--- Create database
-CREATE DATABASE velvetroutes CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+# Enter your password, then create database
+CREATE DATABASE velvetroutes;
 
--- Verify
+# Verify it was created
 SHOW DATABASES;
 
--- Exit
+# Exit MySQL
 EXIT;
 ```
 
-### Step 3: Configure Environment
+**Option B: Using MySQL Workbench**
+1. Open MySQL Workbench
+2. Connect to your local MySQL server
+3. Click "Create a new schema" button
+4. Name it: `velvetroutes`
+5. Click "Apply"
 
-Edit `.env` file:
+### Step 2: Configure Database Connection
+
+Open the `.env` file and update the DATABASE_URL:
 
 ```env
-# MySQL Database Connection
 DATABASE_URL="mysql://root:YOUR_PASSWORD@localhost:3306/velvetroutes"
-
-# JWT Secret
-JWT_SECRET=your_secret_key_here
-
-# Server Port
-PORT=5000
 ```
 
-**Important:** Replace `YOUR_PASSWORD` with your MySQL root password!
+**Replace:**
+- `root` - with your MySQL username (usually "root")
+- `YOUR_PASSWORD` - with your MySQL password
+- `localhost` - with your MySQL host (usually "localhost")
+- `3306` - with your MySQL port (usually 3306)
 
-### Step 4: Setup Database
-
-```bash
-# Generate Prisma Client
-npm run db:generate
-
-# Create tables
-npm run db:migrate
-
-# Add sample data
-npm run db:seed
-```
-
-### Step 5: Start Application
-
-```bash
-start.bat
-```
-
----
-
-## 🔧 MySQL Connection Strings
-
-### Local Development
-
+**Example:**
 ```env
-# Basic connection
-DATABASE_URL="mysql://root:password@localhost:3306/velvetroutes"
-
-# With specific user
-DATABASE_URL="mysql://username:password@localhost:3306/velvetroutes"
-
-# With connection pooling
-DATABASE_URL="mysql://root:password@localhost:3306/velvetroutes?connection_limit=5"
-
-# With SSL
-DATABASE_URL="mysql://root:password@localhost:3306/velvetroutes?sslmode=require"
+DATABASE_URL="mysql://root:mypassword123@localhost:3306/velvetroutes"
 ```
 
-### Production (Example)
+### Step 3: Run Setup Script
 
-```env
-# AWS RDS
-DATABASE_URL="mysql://admin:password@mydb.123456.us-east-1.rds.amazonaws.com:3306/velvetroutes"
-
-# Google Cloud SQL
-DATABASE_URL="mysql://root:password@/velvetroutes?host=/cloudsql/project:region:instance"
-
-# Azure Database
-DATABASE_URL="mysql://admin@server:password@server.mysql.database.azure.com:3306/velvetroutes?ssl=true"
+Double-click `setup-database.bat` or run in terminal:
+```bash
+setup-database.bat
 ```
 
----
+This will:
+1. ✅ Install dependencies
+2. ✅ Generate Prisma Client
+3. ✅ Create database tables (migrations)
+4. ✅ Seed sample data
 
-## 📊 Database Schema
-
-### Tables Created (20+)
-
-```
-MySQL Database: velvetroutes
-├── users                    # User accounts
-├── profiles                 # User profiles
-├── sessions                 # Login sessions
-├── providers                # API providers
-├── provider_api_keys        # Encrypted keys
-├── inventory_items          # Travel products
-├── hotels                   # Hotel details
-├── flights                  # Flight info
-├── cars                     # Car rentals
-├── trains                   # Train bookings
-├── buses                    # Bus services
-├── bookings                 # Reservations
-├── booking_items            # Booking details
-├── payments                 # Transactions
-├── invoices                 # Invoices
-├── refunds                  # Refunds
-├── reviews                  # User reviews
-├── notifications            # Messages
-├── audit_logs               # Activity logs
-└── searches                 # Search cache
-```
-
----
-
-## 🛠️ MySQL Commands
-
-### Database Management
-
-```sql
--- Show all databases
-SHOW DATABASES;
-
--- Use velvetroutes database
-USE velvetroutes;
-
--- Show all tables
-SHOW TABLES;
-
--- Describe table structure
-DESCRIBE users;
-
--- Show table data
-SELECT * FROM users;
-
--- Count records
-SELECT COUNT(*) FROM users;
-
--- Drop database (⚠️ deletes everything)
-DROP DATABASE velvetroutes;
-```
-
-### User Management
-
-```sql
--- Create new MySQL user
-CREATE USER 'velvetroutes'@'localhost' IDENTIFIED BY 'password';
-
--- Grant privileges
-GRANT ALL PRIVILEGES ON velvetroutes.* TO 'velvetroutes'@'localhost';
-
--- Flush privileges
-FLUSH PRIVILEGES;
-
--- Show users
-SELECT User, Host FROM mysql.user;
-```
-
----
-
-## 🔍 Verify Setup
-
-### Check Database Connection
+### Step 4: Start the Server
 
 ```bash
-# Test MySQL connection
-mysql -u root -p -e "USE velvetroutes; SHOW TABLES;"
+npm run dev
 ```
 
-### Check Prisma Connection
+You should see:
+```
+========================================
+🚀 VelvetRoutes API Server
+========================================
+📡 Server running on port 5000
+🌐 API: http://localhost:5000/api
+========================================
+```
 
+### Step 5: Verify Setup
+
+**Test API:**
 ```bash
-# Open Prisma Studio
+test-api.bat
+```
+
+**Or open browser:**
+```
+http://localhost:5000/api/health
+```
+
+**View database:**
+```bash
 npm run db:studio
 ```
+Opens at http://localhost:5555
 
-This opens: http://localhost:5555
+## ✅ Success!
 
-You should see all 20+ tables with data!
+Your MySQL database is now set up with:
+- 17 tables created
+- Sample data loaded
+- API server running
 
----
+## 🔧 Manual Setup (Alternative)
 
-## 🧪 Test Data
+If the automated script doesn't work:
 
-After running `npm run db:seed`, you'll have:
+```bash
+# 1. Install dependencies
+npm install
 
-### Users
-```sql
-SELECT * FROM users;
+# 2. Generate Prisma Client
+npm run db:generate
+
+# 3. Create tables (run migrations)
+npm run db:migrate
+
+# 4. Load sample data
+npm run db:seed
+
+# 5. Start server
+npm run dev
 ```
-- admin@velvetroutes.com (Admin)
-- john.doe@example.com (User)
 
-### Hotels
-```sql
-SELECT * FROM hotels;
-```
-- Grand Hotel Paris
-- Tokyo Bay Hotel
+## 🗄️ Database Tables Created
 
-### Flights
-```sql
-SELECT * FROM flights;
-```
-- AA100 (New York to London)
+After setup, you'll have these tables:
+- User, Profile
+- Provider, InventoryItem
+- Hotel, Flight, Car, Train, Bus
+- Booking, BookingItem
+- Payment, Invoice
+- Review, Notification
+- Search, AuditLog
 
-### Bookings
-```sql
-SELECT * FROM bookings;
-```
-- 1 sample booking for John Doe
+## 📊 Sample Data Loaded
 
----
+- **2 Users**: Admin and regular user
+- **3 Hotels**: Paris, Tokyo, NYC
+- **3 Flights**: International routes
+- **2 Cars**: Rental cars
+- **1 Booking**: Sample booking with payment
+
+**Test Credentials:**
+- Admin: admin@velvetroutes.com / admin123
+- User: john.doe@example.com / password123
 
 ## 🐛 Troubleshooting
 
-### Problem: Can't connect to MySQL
+### Issue: "Can't connect to MySQL server"
+
+**Solutions:**
+1. Check if MySQL is running:
+   - Windows: Check Services for "MySQL80" or "MySQL"
+   - Or run: `mysql -u root -p` to test connection
+
+2. Verify your password in `.env`
+
+3. Check MySQL port (default is 3306)
+
+### Issue: "Access denied for user"
 
 **Solution:**
-```bash
-# Check if MySQL is running
-# Windows: Services -> MySQL80
-
-# Or restart MySQL
-net stop MySQL80
-net start MySQL80
-```
-
-### Problem: Access denied for user
-
-**Solution:**
-```sql
--- Reset root password
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'new_password';
-FLUSH PRIVILEGES;
-```
-
-### Problem: Database doesn't exist
-
-**Solution:**
-```sql
--- Create it
-CREATE DATABASE velvetroutes;
-```
-
-### Problem: Prisma Client error
-
-**Solution:**
-```bash
-# Regenerate Prisma Client
-npm run db:generate
-```
-
-### Problem: Migration failed
-
-**Solution:**
-```bash
-# Reset and try again
-npm run db:reset
-npm run db:migrate
-npm run db:seed
-```
-
----
-
-## 📱 Using MySQL Workbench
-
-### Visual Database Management
-
-1. **Open MySQL Workbench**
-2. **Connect to localhost**
-   - Hostname: localhost
-   - Port: 3306
-   - Username: root
-   - Password: your_password
-
-3. **Select velvetroutes database**
-4. **Browse tables visually**
-5. **Run queries**
-6. **Export/Import data**
-
----
-
-## 🔄 Migrating from PostgreSQL
-
-If you had PostgreSQL data:
-
-### Export from PostgreSQL
-```bash
-pg_dump -U postgres velvetroutes > backup.sql
-```
-
-### Convert and Import to MySQL
-1. Convert SQL syntax (PostgreSQL → MySQL)
-2. Import to MySQL
-3. Or use Prisma to recreate data
-
----
-
-## 🎯 MySQL vs PostgreSQL Differences
-
-### What Changed:
-
-| Feature | PostgreSQL | MySQL |
-|---------|-----------|-------|
-| UUID | `@db.Uuid` | `@db.VarChar(36)` |
-| Timestamp | `@db.Timestamptz(6)` | `DateTime` |
-| JSON | `@db.JsonB` | `Json` |
-| Float | `@db.Real` | `Float` |
-| Port | 5432 | 3306 |
-
-### What Stayed the Same:
-
-- ✅ All features work identically
-- ✅ Same API endpoints
-- ✅ Same frontend code
-- ✅ Same business logic
-- ✅ Same Prisma queries
-
----
-
-## 📊 Performance Tips
-
-### Optimize MySQL
-
-```sql
--- Check table sizes
-SELECT 
-  table_name,
-  ROUND(((data_length + index_length) / 1024 / 1024), 2) AS "Size (MB)"
-FROM information_schema.TABLES
-WHERE table_schema = "velvetroutes"
-ORDER BY (data_length + index_length) DESC;
-
--- Optimize tables
-OPTIMIZE TABLE users, bookings, payments;
-
--- Analyze tables
-ANALYZE TABLE users, bookings, payments;
-```
-
-### Connection Pooling
-
-In `.env`:
+Update your DATABASE_URL with correct username/password:
 ```env
-DATABASE_URL="mysql://root:password@localhost:3306/velvetroutes?connection_limit=10&pool_timeout=20"
+DATABASE_URL="mysql://root:YOUR_ACTUAL_PASSWORD@localhost:3306/velvetroutes"
 ```
 
----
+### Issue: "Unknown database 'velvetroutes'"
 
-## 🔐 Security
-
-### Secure MySQL
-
-```sql
--- Remove anonymous users
-DELETE FROM mysql.user WHERE User='';
-
--- Remove remote root access
-DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
-
--- Flush privileges
-FLUSH PRIVILEGES;
-```
-
-### Use Strong Passwords
-
-```sql
--- Set strong password
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'StrongP@ssw0rd!123';
-```
-
----
-
-## 📚 Additional Resources
-
-- **MySQL Documentation:** https://dev.mysql.com/doc/
-- **Prisma MySQL Guide:** https://www.prisma.io/docs/concepts/database-connectors/mysql
-- **MySQL Workbench:** https://www.mysql.com/products/workbench/
-
----
-
-## ✅ Success Checklist
-
-Your MySQL setup is successful if:
-
-- [ ] MySQL is installed and running
-- [ ] Database `velvetroutes` created
-- [ ] `.env` configured with correct connection string
-- [ ] `npm run db:generate` completed
-- [ ] `npm run db:migrate` completed
-- [ ] `npm run db:seed` completed
-- [ ] Prisma Studio shows all tables
-- [ ] Backend starts without errors
-- [ ] Frontend connects successfully
-- [ ] Can login with test account
-- [ ] Profile page works
-
----
-
-## 🎉 You're Ready!
-
-**Your VelvetRoutes platform is now running on MySQL!**
-
-Everything works exactly the same as before, just with MySQL instead of PostgreSQL.
-
-### Quick Start:
+**Solution:**
+Create the database first:
 ```bash
-# 1. Create database
-mysql -u root -p -e "CREATE DATABASE velvetroutes;"
-
-# 2. Setup
-npm run db:generate
-npm run db:migrate
-npm run db:seed
-
-# 3. Start
-start.bat
+mysql -u root -p
+CREATE DATABASE velvetroutes;
+EXIT;
 ```
 
-### Test:
-- Login: john.doe@example.com / password123
-- Profile: http://localhost:3000/profile
+### Issue: "Migration failed"
 
-**Enjoy your MySQL-powered VelvetRoutes!** 🐬✈️🏨🚗
+**Solution:**
+Reset and try again:
+```bash
+npm run db:reset
+setup-database.bat
+```
 
----
+### Issue: "Port 5000 already in use"
 
-*For more help, see QUICK_START.md or SETUP_GUIDE.md*
+**Solution:**
+Change PORT in `.env`:
+```env
+PORT=3000
+```
+
+## 📝 Useful Commands
+
+```bash
+# Database
+npm run db:generate      # Generate Prisma Client
+npm run db:migrate       # Create/update tables
+npm run db:seed          # Load sample data
+npm run db:studio        # Open database GUI
+npm run db:push          # Push schema without migration
+npm run db:reset         # Reset database (⚠️ deletes all data)
+
+# Server
+npm run dev              # Start dev server
+npm run server           # Start production server
+
+# Testing
+test-api.bat             # Test API endpoints
+check-database.bat       # Check database connection
+```
+
+## 🔍 Verify Database
+
+### Using MySQL Command Line:
+```bash
+mysql -u root -p
+USE velvetroutes;
+SHOW TABLES;
+SELECT COUNT(*) FROM User;
+SELECT COUNT(*) FROM Hotel;
+EXIT;
+```
+
+### Using MySQL Workbench:
+1. Open MySQL Workbench
+2. Connect to server
+3. Select `velvetroutes` schema
+4. Browse tables
+
+### Using Prisma Studio:
+```bash
+npm run db:studio
+```
+Opens GUI at http://localhost:5555
+
+## 🎯 Next Steps
+
+1. **Test the API** - Run `test-api.bat`
+2. **View data** - Run `npm run db:studio`
+3. **Read API docs** - See `API_DOCUMENTATION.md`
+4. **Start building** - Check `PROJECT_SUMMARY.md`
+
+## 💡 MySQL vs PostgreSQL
+
+Your project is now configured for MySQL. The main differences:
+- ✅ Connection string format: `mysql://` instead of `postgresql://`
+- ✅ Default port: 3306 instead of 5432
+- ✅ Prisma schema: Already set to `provider = "mysql"`
+
+Everything else works the same!
+
+## 🆘 Need Help?
+
+Check these files:
+- `HOW_TO_RUN.md` - General run instructions
+- `API_DOCUMENTATION.md` - API reference
+- `DATABASE_SETUP.md` - Database details
+- `QUICKSTART.md` - Quick start guide
+
+## ✨ You're All Set!
+
+Your VelvetRoutes API is now running with MySQL! 🚀

@@ -19,24 +19,22 @@ A comprehensive travel booking platform with a beautiful modern UI, complete dat
 ### Prerequisites
 
 - Node.js 18+
-- MySQL 8.0+ (or PostgreSQL 14+)
+- MySQL 8.0+
 - npm
 
-### Installation (3 Steps)
+### Installation (Simple 3 Steps)
+
+**📖 Read:** `START_HERE_MYSQL.md` for detailed instructions
 
 ```bash
-# 1. Install all dependencies
-install-all.bat
+# 1. Create database in MySQL
+CREATE DATABASE velvetroutes;
 
-# 2. Configure database
-# Edit .env file and set your DATABASE_URL
-# DATABASE_URL="mysql://root:YOUR_PASSWORD@localhost:3306/velvetroutes"
-# See MYSQL_SETUP.md for detailed MySQL setup instructions
+# 2. Update .env file with your MySQL password
+DATABASE_URL="mysql://root:YOUR_PASSWORD@localhost:3306/velvetroutes"
 
-# 3. Setup database
-npm run db:generate
-npm run db:migrate
-npm run db:seed
+# 3. Run setup
+setup-database.bat
 ```
 
 ### Start Application
@@ -177,8 +175,8 @@ start.bat              # Start both (Windows)
 Create a `.env` file in the root directory:
 
 ```env
-# Database
-DATABASE_URL="postgresql://postgres:password@localhost:5432/velvetroutes"
+# Database - MySQL
+DATABASE_URL="mysql://root:password@localhost:3306/velvetroutes"
 
 # Server
 PORT=5000
@@ -243,22 +241,30 @@ The seed includes:
 
 ## 📚 Documentation
 
-- **QUICK_START.md** - 10-minute setup guide
-- **SETUP_GUIDE.md** - Detailed setup instructions
-- **COMPLETE_SETUP.md** - Complete setup guide
-- **ARCHITECTURE.md** - System architecture
-- **VERIFICATION_CHECKLIST.md** - Testing checklist
-- **WHATS_NEW.md** - Changelog and new features
+### Setup Guides
+- **START_HERE_MYSQL.md** - ⭐ Start here! Simple MySQL setup
+- **MYSQL_SETUP.md** - Detailed MySQL guide with troubleshooting
+- **MYSQL_QUICK_START.txt** - Quick reference text file
+
+### API & Development
+- **API_DOCUMENTATION.md** - Complete API reference
+- **PROJECT_SUMMARY.md** - Project overview and architecture
+- **DEPLOYMENT_CHECKLIST.md** - Production deployment guide
+
+### Additional Resources
+- **GET_API_KEYS_NOW.md** - Get free API keys for travel data
+- **GIT_PUSH_GUIDE.md** - Push to GitHub guide
 
 ## 🐛 Troubleshooting
 
 ### Database Connection Error
 
 ```bash
-# Check PostgreSQL is running
-pg_ctl status
+# Check MySQL is running
+# Windows: Check Services for "MySQL80"
 
 # Verify DATABASE_URL in .env
+# DATABASE_URL="mysql://root:password@localhost:3306/velvetroutes"
 ```
 
 ### Port Already in Use
@@ -301,9 +307,10 @@ npm run db:seed
 - TypeScript support
 
 ### Database
-- MySQL 8.0+ (or PostgreSQL 14+)
+- MySQL 8.0+
+- Prisma ORM 5
 - Prisma Migrate
-- Prisma Studio
+- Prisma Studio (GUI)
 
 ### External Services (Optional)
 - Stripe - Payment processing
@@ -350,11 +357,11 @@ MIT License - feel free to use this project for learning or commercial purposes.
 
 If you encounter any issues:
 
-1. Check the documentation files
-2. Review error messages in console
-3. Verify environment variables
-4. Ensure PostgreSQL is running
-5. Check database connection with Prisma Studio
+1. Read **START_HERE_MYSQL.md** for setup help
+2. Check **MYSQL_SETUP.md** for troubleshooting
+3. Verify environment variables in `.env`
+4. Ensure MySQL is running
+5. Check database with `npm run db:studio`
 
 ## 🎉 Success Checklist
 
@@ -385,6 +392,6 @@ Coming soon:
 
 **Built with ❤️ for travelers and developers**
 
-*Version 3.0.0 - November 2024*
+*Version 4.0.0 - November 2024*
 
-For detailed setup instructions, see **QUICK_START.md** or **SETUP_GUIDE.md**
+**🚀 Quick Start:** Read **START_HERE_MYSQL.md** to get started in 5 minutes!
